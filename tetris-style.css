@@ -1,0 +1,562 @@
+/**
+ * ===================================================
+ * TETRIS GAME - CSS STYLESHEET
+ * ===================================================
+ * 
+ * Gunakan file ini jika Anda ingin setup modular
+ * dengan HTML, CSS, dan JS terpisah
+ */
+
+/* ===== RESET & GLOBAL STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* ===== WRAPPER & CONTAINER ===== */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    border: 2px solid #00f0f0;
+    box-shadow: 0 0 30px rgba(0, 240, 240, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* ===== GAME AREA ===== */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #00f0f0;
+    text-shadow: 0 0 10px rgba(0, 240, 240, 0.5);
+    margin-bottom: 10px;
+}
+
+/* ===== GAME BOARD ===== */
+.game-board {
+    position: relative;
+    width: 300px;
+    height: 500px;
+    background: #0d0d0d;
+    border: 3px solid #00f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 240, 240, 0.5), inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+.game-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    gap: 0;
+    padding: 0;
+}
+
+/* ===== GRID CELLS ===== */
+.grid-cell {
+    background: #1a1a1a;
+    border: 0.5px solid rgba(0, 240, 240, 0.1);
+    position: relative;
+}
+
+.grid-cell.filled {
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===== CONTROLS ===== */
+.controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 12px 20px;
+    background: rgba(0, 240, 240, 0.2);
+    border: 2px solid #00f0f0;
+    border-radius: 8px;
+    color: #00f0f0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background: rgba(0, 240, 240, 0.4);
+    box-shadow: 0 0 15px rgba(0, 240, 240, 0.6);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 0 10px rgba(0, 240, 240, 0.3);
+}
+
+button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 220px;
+}
+
+/* ===== INFO CARDS ===== */
+.info-card {
+    background: rgba(0, 240, 240, 0.1);
+    border: 2px solid rgba(0, 240, 240, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.info-label {
+    font-size: 11px;
+    color: rgba(0, 240, 240, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: #00f0f0;
+    text-shadow: 0 0 10px rgba(0, 240, 240, 0.5);
+}
+
+/* ===== NEXT PIECE PREVIEW ===== */
+.next-piece {
+    background: rgba(0, 240, 240, 0.1);
+    border: 2px solid rgba(0, 240, 240, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+.next-piece-label {
+    font-size: 11px;
+    color: rgba(0, 240, 240, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-bottom: 0;
+}
+
+.preview-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #1a1a1a;
+    border: 1px solid rgba(0, 240, 240, 0.2);
+    border-radius: 4px;
+}
+
+/* ===== STATS ===== */
+.stats {
+    background: rgba(0, 240, 240, 0.1);
+    border: 2px solid rgba(0, 240, 240, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 13px;
+    backdrop-filter: blur(5px);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 240, 240, 0.2);
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: rgba(0, 240, 240, 0.6);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-weight: 700;
+    color: #00f0f0;
+}
+
+/* ===== KEYBOARD HINT ===== */
+.keyboard-hint {
+    font-size: 11px;
+    color: rgba(0, 240, 240, 0.6);
+    text-align: center;
+    padding: 15px;
+    background: rgba(0, 240, 240, 0.1);
+    border: 1px solid rgba(0, 240, 240, 0.2);
+    border-radius: 8px;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* ===== GAME OVER MODAL ===== */
+.game-over-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.game-over-modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid #00f0f0;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    min-width: 350px;
+    box-shadow: 0 0 40px rgba(0, 240, 240, 0.5);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #00f0f0;
+    text-shadow: 0 0 10px rgba(0, 240, 240, 0.5);
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: rgba(0, 240, 240, 0.7);
+    margin-bottom: 25px;
+}
+
+.modal-score {
+    font-size: 48px;
+    font-weight: 700;
+    color: #00f0f0;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(0, 240, 240, 0.6);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.modal-buttons button {
+    flex: 1;
+}
+
+/* ===== ANIMATIONS ===== */
+.pulse {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(0, 240, 240, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(0, 240, 240, 0.8);
+    }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-width: auto;
+    }
+
+    .info-card {
+        flex: 1;
+        min-width: 140px;
+    }
+
+    .next-piece {
+        flex: 1;
+        min-width: 140px;
+    }
+
+    .stats {
+        flex: 1;
+        min-width: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .game-title {
+        font-size: 24px;
+    }
+
+    .game-board {
+        width: 250px;
+        height: 450px;
+    }
+
+    button {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .modal-content {
+        min-width: 280px;
+        padding: 30px 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 28px;
+    }
+
+    .modal-score {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .game-area {
+        gap: 15px;
+    }
+
+    .game-board {
+        width: 200px;
+        height: 350px;
+    }
+
+    .game-grid {
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(20, 1fr);
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .info-card,
+    .next-piece,
+    .stats {
+        flex: 1;
+        padding: 10px;
+        min-width: 80px;
+    }
+
+    .info-label,
+    .next-piece-label {
+        font-size: 9px;
+    }
+
+    .info-value {
+        font-size: 24px;
+    }
+
+    .controls {
+        gap: 5px;
+    }
+
+    button {
+        padding: 8px 10px;
+        font-size: 10px;
+    }
+
+    .keyboard-hint {
+        font-size: 9px;
+        padding: 8px;
+    }
+}
+
+/* ===== DARK MODE (Optional) ===== */
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    }
+
+    .game-board {
+        background: #000000;
+    }
+
+    .grid-cell {
+        background: #0a0a0a;
+    }
+
+    .container {
+        background: rgba(0, 0, 0, 0.9);
+    }
+}
+
+/* ===== LIGHT MODE (Optional) ===== */
+@media (prefers-color-scheme: light) {
+    html, body {
+        background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    }
+
+    .game-board {
+        background: #ffffff;
+        border-color: #333333;
+    }
+
+    .grid-cell {
+        background: #f5f5f5;
+        border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-color: #333333;
+    }
+
+    .game-title,
+    .info-label,
+    .info-value,
+    button,
+    .stat-label,
+    .stat-value {
+        color: #333333;
+    }
+
+    .keyboard-hint {
+        background: rgba(0, 0, 0, 0.05);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    body {
+        background: white;
+    }
+
+    .container {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+
+    button,
+    .game-over-modal {
+        display: none;
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles untuk keyboard navigation */
+button:focus,
+input:focus {
+    outline: 2px solid #00f0f0;
+    outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: more) {
+    button {
+        border-width: 3px;
+    }
+
+    .game-board {
+        border-width: 5px;
+    }
+}
